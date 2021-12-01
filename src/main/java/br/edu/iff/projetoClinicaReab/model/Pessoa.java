@@ -1,17 +1,17 @@
 package br.edu.iff.projetoClinicaReab.model;
 
 import java.io.Serializable;
-// import javax.persistence.Column;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-// import javax.persistence.OneToOne;
-// import javax.validation.constraints.NotBlank;
-// import org.hibernate.validator.constraints.Length;
-// import org.hibernate.validator.constraints.br.CPF;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -20,12 +20,12 @@ public abstract class Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // @Column(nullable = false, length = 150)
-    // @NotBlank(message = "Nome obrigatório")
-    // @Length(max = 150, message = "Campo Nome deve ter no máximo 150 caracteres")
+    @Column(nullable = false, length = 150)
+    @NotBlank(message = "Nome obrigatório")
+    @Length(max = 150, message = "Campo Nome deve ter no máximo 150 caracteres")
     private String nome;
-    // @Column(nullable = false, length = 14, unique = true, updatable = false)
-    // @CPF(message = "CPF Inválido")
+    @Column(nullable = false, length = 14, unique = true, updatable = false)
+    @CPF(message = "CPF Inválido")
     private String cpf;
     private String telefone;
 

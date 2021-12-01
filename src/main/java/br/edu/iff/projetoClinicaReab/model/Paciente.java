@@ -1,16 +1,15 @@
 package br.edu.iff.projetoClinicaReab.model;
 
-// import javax.persistence.Column;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-// import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Paciente extends Pessoa {
 
     private static final long serialVersionUID = 1L;
-    // @Column(length = 500)
-    // @Length(max = 200, message = "Campo Situacao deve ter no máximo 500
-    // caracteres")
+    @Column(length = 500)
+    @Length(max = 200, message = "Campo Situacao deve ter no máximo 500 caracteres")
     public String situacao;
 
     public Paciente() {

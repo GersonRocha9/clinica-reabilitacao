@@ -1,32 +1,32 @@
 
 package br.edu.iff.projetoClinicaReab.model;
 
-// import br.edu.iff.projetoClinicaReab.annotation.EmailValidation;
+import br.edu.iff.projetoClinicaReab.annotation.EmailValidation;
 import java.util.ArrayList;
 import java.util.List;
-// import javax.persistence.Column;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
-// import javax.validation.constraints.NotBlank;
-// import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Funcionario extends Pessoa {
 
     private static final long serialVersionUID = 1L;
-    // @Column(nullable = false, length = 100, unique = true, updatable = false)
-    // @NotBlank(message = "E-mail obrigatório")
-    // @EmailValidation(message = "E-mail inválido")
+    @Column(nullable = false, length = 100, unique = true, updatable = false)
+    @NotBlank(message = "E-mail obrigatório")
+    @EmailValidation(message = "E-mail inválido")
     private String email;
-    // @Column(nullable = false, length = 100, unique = true, updatable = false)
-    // @NotBlank(message = "Senha obrigatória")
+    @Column(nullable = false, length = 100, unique = true, updatable = false)
+    @NotBlank(message = "Senha obrigatória")
     private String senha;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn
-    // @Size(min = 1, message = "Funcionário deve ter no mínimo 1 permissão")
+    @Size(min = 1, message = "Funcionário deve ter no mínimo 1 permissão")
     private List<Permissao> permissoes = new ArrayList<>();
 
     public String getEmail() {
