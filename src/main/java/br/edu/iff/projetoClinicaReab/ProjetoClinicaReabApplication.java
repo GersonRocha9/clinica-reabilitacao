@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class ProjetoClinicaReabApplication implements CommandLineRunner {
@@ -51,12 +52,14 @@ public class ProjetoClinicaReabApplication implements CommandLineRunner {
         p1.setSituacao("Encontra-se bem, porém precisando de acolhimento.");
         p1.setTelefone("(22)99952-4259");
         p1.setEndereco(end);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         Funcionario f1 = new Funcionario();
         f1.setPermissoes(List.of(per1));
         f1.setNome("Adilson");
         f1.setEmail("adilson@gmail.com");
-        f1.setSenha("123456");
+        f1.setSenha(encoder.encode("123"));
+        // f1.setSenha("123456");
         f1.setCpf("052.813.417-58");
         f1.setTelefone("(22)99432-3823");
         f1.setEndereco(end);
