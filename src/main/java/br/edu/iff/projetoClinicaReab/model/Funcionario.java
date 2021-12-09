@@ -16,11 +16,10 @@ import javax.validation.constraints.Size;
 public class Funcionario extends Pessoa {
 
     private static final long serialVersionUID = 1L;
-    @Column(nullable = false, length = 100, unique = true, updatable = false)
+   
     @NotBlank(message = "E-mail obrigatório")
     @EmailValidation(message = "E-mail inválido")
     private String email;
-    @Column(nullable = false, length = 100, unique = true, updatable = false)
     @NotBlank(message = "Senha obrigatória")
     private String senha;
 

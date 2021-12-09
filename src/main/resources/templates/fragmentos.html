@@ -25,8 +25,8 @@
                             <li class="nav-item" th:classappend="${pagina == 'funcionarios' ? 'active' : ''}" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a class="nav-link" th:href="@{~/funcionarios}" >Funcionários</a> 
                             </li>
-                            <li class="nav-item" th:classappend="${pagina == 'funcionarios' ? 'active' : ''}" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <a class="nav-link" th:href="@{~/meusdados}" >Meus Dados</a> 
+                            <li class="nav-item" th:classappend="${pagina == 'meusdados' ? 'active' : ''}" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="nav-link" th:href="@{~/meusdados}">Meus dados</a> 
                             </li>
                         </ul>
                         <a sec:authorize="isAuthenticated()" class="btn btn-outline-danger" style="float: right" th:href="@{~/logout}" role="button">Sair</a>

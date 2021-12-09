@@ -3,10 +3,16 @@ package br.edu.iff.projetoClinicaReab.controller.view;
 import br.edu.iff.projetoClinicaReab.model.Funcionario;
 import br.edu.iff.projetoClinicaReab.repository.PermissaoRepository;
 import br.edu.iff.projetoClinicaReab.services.FuncionarioService;
+
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(path = "/funcionarios")
@@ -27,12 +34,28 @@ public class FuncionarioViewController {
     private FuncionarioService service;
     @Autowired
     private PermissaoRepository permissaoRepo;
-
+    
     @GetMapping
     public String getAll(Model model) {
         model.addAttribute("funcionarios", service.findAll());
         return "funcionarios";
     }
+    
+    /*
+    //exibe somente 1 dado, caso não queira mostrar todos
+    @GetMapping
+    public String getAll( Model model) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	String email = auth.getName();
+    	
+        model.addAttribute("funcionarios",service.findByEmail(email));
+        System.out.println( email);
+        return "funcionarios";
+    }
+    */
+    
+    
+    
 
     @GetMapping(path = "/funcionario")
     public String cadastro(Model model) {
@@ -56,6 +79,8 @@ public class FuncionarioViewController {
 
         funcionario.setId(null);
         try {
+        	String senhaCriptografada = new BCryptPasswordEncoder().encode(funcionario.getSenha());
+    		funcionario.setSenha(senhaCriptografada);
             service.save(funcionario);
             model.addAttribute("msgSucesso", "Funcionário cadastrado com sucesso.");
             model.addAttribute("funcionario", new Funcionario());
@@ -93,7 +118,9 @@ public class FuncionarioViewController {
 
         funcionario.setId(id);
         try {
-            service.update(funcionario);
+        	String senhaCriptografada = new BCryptPasswordEncoder().encode(funcionario.getSenha());
+    		funcionario.setSenha(senhaCriptografada);
+    		service.update(funcionario);
             model.addAttribute("msgSucesso", "Funcionário atualizado com sucesso.");
             model.addAttribute("funcionario", funcionario);
             return "formFuncionario";
@@ -109,35 +136,13 @@ public class FuncionarioViewController {
         return "redirect:/funcionarios";
     }
 
-    @GetMapping(path = "/meusdados")
-
-    @PostMapping(path = "/meusdados")
-    public String updateMeusDados(@Valid @ModelAttribute Funcionario funcionario, BindingResult result,
-            @RequestParam("senhaAtual") String senhaAtual, @RequestParam("novaSenha") String novaSenha,
-            @RequestParam("confirmarNovaSenha") String confirmarNovaSenha, Model model) {
-
-        List<FieldError> list = new ArrayList<>();
-        for (FieldError fe : result.getFieldErrors()) {
-            if (!fe.getField().equals("senha") && !fe.getField().equals("permissoes")) {
-                list.add(fe);
-            }
-        }
-        if (!list.isEmpty()) {
-            model.addAttribute("msgErros", list);
-            return "formMeusDados";
-        }
-
-        Funcionario funcionarioBD = service.findByEmail(funcionario.getEmail());
-        if (!funcionarioBD.getId().equals(funcionario.getId())) {
-            throw new RuntimeException("Acesso negado.");
-        }
-        try {
-            model.addAttribute("msgSucesso", "Funcionário atualizado com sucesso.");
-            model.addAttribute("funcionario", funcionario);
-            return "formMeusDados";
-        } catch (Exception e) {
-            model.addAttribute("msgErros", new ObjectError("funcionario", e.getMessage()));
-            return "formMeusDados";
-        }
+    /*
+    //teste ver meus dados
+    @GetMapping(path = "/meusdados/{id}")
+    public String getOne(@AuthenticationPrincipal Funcionario funcionario, RedirectAttributes model, @PathVariable("id") Long id) {
+        model.addAttribute("funcionario", service.findById(funcionario.getId()));
+        model.addAttribute("funcionario", funcionario);
+        return "meusdados";
     }
+    */
 }

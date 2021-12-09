@@ -50,7 +50,7 @@ public class FuncionarioService {
 
     private void verificaCPFEmailCadastrado(String cpf, String email) {
         List<Pessoa> result = repo.findByCpfOrEmail(cpf, email);
-        if (result.isEmpty()) {
+        if (!result.isEmpty()) {
             throw new RuntimeException("CPF ou E-mail já cadastrados");
         }
     }

@@ -29,7 +29,8 @@ public class MyWebSecurity extends WebSecurityConfigurerAdapter {
         .antMatchers("/pacientes/**").hasAnyRole("ADMIN", "FUNC")
         .antMatchers("/formPaciente").hasAnyRole("ADMIN", "FUNC")
         .antMatchers("/files/**").hasAnyRole("ADMIN", "FUNC")
-        .antMatchers("/funcionarios/meusdados/**").hasAnyRole("ADMIN", "FUNC")
+        .antMatchers("/meusdados/**").hasAnyRole("ADMIN", "FUNC")
+        .antMatchers("/meusdados/").hasAnyRole("ADMIN", "FUNC")
         .anyRequest().authenticated().and()
         .formLogin().permitAll().defaultSuccessUrl("/", true);
   }
