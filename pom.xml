@@ -34,13 +34,12 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Adicionando dependência do Postgres Connector Java -->
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <!-- Adicionando dependência do mySQL Connector Java -->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
-
 
         <!-- H2 e postgree -->
         <dependency>
