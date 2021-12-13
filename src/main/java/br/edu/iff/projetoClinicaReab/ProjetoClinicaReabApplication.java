@@ -1,9 +1,11 @@
 package br.edu.iff.projetoClinicaReab;
 
 import br.edu.iff.projetoClinicaReab.model.Endereco;
+import br.edu.iff.projetoClinicaReab.model.Exame;
 import br.edu.iff.projetoClinicaReab.model.Funcionario;
 import br.edu.iff.projetoClinicaReab.model.Paciente;
 import br.edu.iff.projetoClinicaReab.model.Permissao;
+import br.edu.iff.projetoClinicaReab.repository.ExameRepository;
 import br.edu.iff.projetoClinicaReab.repository.FuncionarioRepository;
 import br.edu.iff.projetoClinicaReab.repository.PacienteRepository;
 import br.edu.iff.projetoClinicaReab.repository.PermissaoRepository;
@@ -25,6 +27,8 @@ public class ProjetoClinicaReabApplication implements CommandLineRunner {
     private FuncionarioRepository funcionarioRepo;
     @Autowired
     private PermissaoRepository permissaoRepo;
+    @Autowired
+    private ExameRepository exameRepo;
 
     public static void main(String[] args) {
         SpringApplication.run(ProjetoClinicaReabApplication.class, args);
@@ -46,6 +50,12 @@ public class ProjetoClinicaReabApplication implements CommandLineRunner {
         end.setCidade("Campos");
         end.setCep("28015-490");
 
+        Exame ex1 = new Exame();
+        ex1.setNomePaciente("Vinicius Bastos");
+        ex1.setDescricaoExame("Exame de COVID-19");
+        ex1.setDataExame("09/12/2021");
+        ex1.setHorarioExame("08:00");
+
         Paciente p1 = new Paciente();
         p1.setNome("Gerson Rocha");
         p1.setCpf("130.678.117-55");
@@ -66,6 +76,7 @@ public class ProjetoClinicaReabApplication implements CommandLineRunner {
 
         funcionarioRepo.save(f1);
         pacienteRepo.save(p1);
+        exameRepo.save(ex1);
 
     }
 

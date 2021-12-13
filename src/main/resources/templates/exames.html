@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragmentos :: imports-css(title='Exames')}">
+    <title>title</title>
+  </head>
+  <body>
+    <div th:replace="~{fragmentos :: barramenu(pagina='exames')}" />
+
+    <div class="container" style="margin-top: 20px">
+      <div class="card-header">
+        <h4>
+          Exames cadastrados:
+          <a class="btn btn-primary float-right" th:href="@{~/exames/exame}" role="button">Novo Exame</a>
+        </h4>
+      </div>
+
+      <div class="card" th:each="exame : ${exames}">
+        <div class="card-body">
+          <h5 class="card-title" th:text="'Nome do Paciente: '+${exame.nomePaciente}"></h5>
+          <div class="card-text" th:text="'Descrição do Exame: '+${exame.descricaoExame}"></div>
+          <div class="card-text" th:text="'Data do Exame: '+${exame.dataExame}"></div>
+          <div class="card-text" th:text="'Horário do Exame: '+${exame.horarioExame}"></div>
+
+          <a th:href="@{'~/exames/exame/'+${exame.id}}" class="btn btn-warning">Editar</a>
+          <a
+            th:href="@{'~/exames/'+${exame.id}+'/deletar'}"
+            class="btn btn-danger"
+            onclick="return confirm('Deseja realmente excluir esse exame?')"
+            >Excluir</a
+          >
+          <div class="card" >
+        
+        </div>
+      </div>
+    </div>
+    <div th:replace="~{fragmentos :: imports-js}"></div>
+  </body>
+</html>
